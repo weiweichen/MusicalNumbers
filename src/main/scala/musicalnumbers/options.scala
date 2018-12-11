@@ -27,7 +27,7 @@ object Options {
 
     opt[String]('k', "key").required().action((x, c) =>
       c.copy(key = x)).validate(x =>
-      if (validTuneTypes.contains(x)) success
+      if (validKeys.contains(x)) success
       else {
         failure(s"Tune key signature needs to be one of these: [${validKeys.mkString(", ")}].")
     }).text("Tune Key Signature")
