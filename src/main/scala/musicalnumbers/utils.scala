@@ -1,8 +1,16 @@
+/**
+  * Copyright Weiwei Chen 2018
+  * Author: Weiwei Chen (weiwei.chen.uci@gmail.com)
+  */
+
 package musicalnumbers
 
 import java.io._
 
 object utils {
+
+    var verbose: Boolean = false
+
     def writeToFile(fileName: String, content: String) = {
     val file = new File(fileName)
     println(s"Output File: ${fileName}")
@@ -43,6 +51,10 @@ object utils {
       case _: Throwable =>
         throw new Exception(s"${file.getName} cannot be read from.")
     }
+  }
+
+  def dbg(string: String): Unit = {
+    if(verbose) println(string)
   }
 
 }

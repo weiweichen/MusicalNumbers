@@ -1,3 +1,8 @@
+/**
+  * Copyright Weiwei Chen 2018
+  * Author: Weiwei Chen (weiwei.chen.uci@gmail.com)
+  */
+
 package musicalnumbers
 
 import java.io._
@@ -7,38 +12,14 @@ object MusicalNumbers{
 
   var firstNumber = 0
 
-  def main(args: Array[String]): Unit = {
-    Options.parser.parse(args, Config()) match {
-      case Some(config) =>
-        println(s"${config}")
-
-        val inputName = config.inputFileName
-        val tuneType = config.tuneType
-        val key = config.key
-
-        firstNumber = getFirstNumber(config.inputFileName)
-
-        val fis = utils.getFileInputStream(config.inputFileName)
-
-        val tuneName = inputName.split('.').head.split('/').last.split('_').map(s => s(0).toUpper + s.tail).mkString(" ")
-
-        val outputName = inputName.replace(".txt", ".abc")
-
-        val header = abcHeader(tuneName, tuneType, key)
-        val body = abcBody(tuneType, fis, key)
-        utils.writeToFile(outputName, List(header,body).mkString("\n"))
-
-      case None =>
-      // arguments are bad, error message will have been displayed
-    }
-  }
+  var noteMapping: String = "direct"
 
   def getFirstNumber(fileName: String) : Int = {
-    val fs = utils.getFileInputStream(fileName)
-    val firstNumber = getNextNumber(fs)
-    fs.close()
-    firstNumber
-  }
+     val fs = utils.getFileInputStream(fileName)
+     val firstNumber = getNextNumber(fs)
+     fs.close()
+     firstNumber
+   }
 
   def getNextNumber(fs: FileInputStream) : Int = {
     var ch : Char = 'a'
@@ -76,8 +57,15 @@ object MusicalNumbers{
     val rootIdx = keyIndex(key)
     digits.foldLeft(Map[Int, String]())((map: Map[Int, String], number: Int) => {
       // val abcNoteIdx = (number + rootIdx) % abcNotes.size
-      val abcNoteIdx = number - firstNumber + rootIdx
-      map + (number  -> abcNotes(abcNoteIdx))
+
+      noteMapping match {
+        case "direct" =>
+          val abcNoteIdx = number - firstNumber + rootIdx
+          map + (number  -> abcNotes(abcNoteIdx))
+        case "wrapped"=>
+          val abcNoteIdx = (number - firstNumber + rootIdx) % 7 + 7
+          map + (number  -> abcNotes(abcNoteIdx))
+      }
     })
   }
 
@@ -91,21 +79,21 @@ object MusicalNumbers{
   def abcHeader(tuneName: String, tuneType: String, key: String) : String = {
     val timeSignature = tuneInfo(tuneType)._1
     val noteLength = tuneInfo(tuneType)._2
-    val tuneTypeName = tuneInfo(tuneType)._4
+     val tuneTypeName = tuneInfo(tuneType)._4
 
-    s"""
-       |X:1
-       |T:${tuneName} ${tuneTypeName}
-       |M:${timeSignature}
-       |L:${noteLength}
-       |R:${tuneType}
-       |K:${key}""".stripMargin
-  }
+     s"""
+        |X:1
+        |T:${tuneName} ${tuneTypeName}
+        |M:${timeSignature}
+        |L:${noteLength}
+        |R:${tuneType}
+        |K:${key}""".stripMargin
+   }
 
   def abcBody(tuneType: String, fs: FileInputStream, key: String) : String = {
     val notesPerMeasure = tuneInfo(tuneType)._6
     val noteABCMapping = getNoteABCMapping(key)
-    println(s"Note to ABC Mapping\n${noteABCMapping.mkString("\n")}\n")
+    utils.dbg(s"Note to ABC Mapping\n${noteABCMapping.mkString("\n")}\n")
 
     val builder = new StringBuilder
 
@@ -135,4 +123,29 @@ object MusicalNumbers{
     builder.toString()
   }
 
+  def main(args: Array[String]): Unit = {
+    Options.parser.parse(args, Config()) match {
+      case Some(config) =>
+        val inputName = config.inputFileName
+        val tuneType = config.tuneType
+        val key = config.key
+        noteMapping = config.noteMapping
+        utils.verbose = config.verbose
+
+        firstNumber = getFirstNumber(config.inputFileName)
+
+        val fis = utils.getFileInputStream(config.inputFileName)
+
+        val tuneName = inputName.split('.').head.split('/').last.split('_').map(s => s(0).toUpper + s.tail).mkString(" ")
+
+        val outputName = s"${inputName.split('.').head}_${tuneType}_in_${key}.abc"
+
+        val header = abcHeader(tuneName, tuneType, key)
+        val body = abcBody(tuneType, fis, key)
+        utils.writeToFile(outputName, List(header,body).mkString("\n"))
+
+      case None =>
+      // arguments are bad, error message will have been displayed
+    }
+  }
 }
