@@ -1,7 +1,6 @@
 package musicalnumbers
 
 import java.io._
-import scala.collection.immutable._
 
 object utils {
     def writeToFile(fileName: String, content: String) = {
@@ -18,17 +17,17 @@ object utils {
   }
 
   def dummy(args: Array[String]) = {
-    val fis = getFileInputStream(args)
+    val fis = getFileInputStream(args(0))
     while(fis.available() > 0) {
       val current = fis.read().toChar
       println(current)
     }
   }
 
-  def getFileInputStream(args: Array[String]) : FileInputStream = {
-    val file = new File(args(0))
+  def getFileInputStream(fileName: String) : FileInputStream = {
+    val file = new File(fileName)
     if (!file.exists()) {
-      println(args(0)+ " does not exist.")
+      println(fileName + " does not exist.")
       return null
     }
 

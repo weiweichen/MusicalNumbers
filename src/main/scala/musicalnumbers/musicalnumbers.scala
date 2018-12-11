@@ -8,25 +8,33 @@ object MusicalNumbers{
   var firstNumber = 0
 
   def main(args: Array[String]): Unit = {
-    val inputName = args(0)
-    val tuneType = args(1)
-    val key = args(2)
+    Options.parser.parse(args, Config()) match {
+      case Some(config) =>
+        println(s"${config}")
 
-    firstNumber = getFirstNumber(args)
+        val inputName = config.inputFileName
+        val tuneType = config.tuneType
+        val key = config.key
 
-    val fis = utils.getFileInputStream(args)
+        firstNumber = getFirstNumber(config.inputFileName)
 
-    val tuneName = inputName.split('.').head.split('/').last.split('_').map(s => s(0).toUpper + s.tail).mkString(" ")
+        val fis = utils.getFileInputStream(config.inputFileName)
 
-    val outputName = inputName.replace(".txt", ".abc")
+        val tuneName = inputName.split('.').head.split('/').last.split('_').map(s => s(0).toUpper + s.tail).mkString(" ")
 
-    val header = abcHeader(tuneName, tuneType, key)
-    val body = abcBody(tuneType, fis, key)
-    utils.writeToFile(outputName, List(header,body).mkString("\n"))
+        val outputName = inputName.replace(".txt", ".abc")
+
+        val header = abcHeader(tuneName, tuneType, key)
+        val body = abcBody(tuneType, fis, key)
+        utils.writeToFile(outputName, List(header,body).mkString("\n"))
+
+      case None =>
+      // arguments are bad, error message will have been displayed
+    }
   }
 
-  def getFirstNumber(args:Array[String]) : Int = {
-    val fs = utils.getFileInputStream(args)
+  def getFirstNumber(fileName: String) : Int = {
+    val fs = utils.getFileInputStream(fileName)
     val firstNumber = getNextNumber(fs)
     fs.close()
     firstNumber
