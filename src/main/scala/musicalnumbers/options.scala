@@ -44,7 +44,7 @@ object Options {
       if (noteMappings.contains(x)) success
       else {
         failure(s"Note Mapping needs to be one of these: [${noteMappings.mkString(", ")}].")
-    }).text("Note Mapping Strategy")
+    }).text("Note Mapping Strategy, i.e. direct, wrapped")
 
     opt[String]('r', "rhythmpattern").action((x, c) =>
       c.copy(rhythmPattern = x)).text("Rhythm Pattern (Support TBD).")

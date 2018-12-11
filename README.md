@@ -19,9 +19,9 @@ Let me know (weiwei.chen.uci@gmail.com) if you have any opinions on the effort o
    
    MacOS: http://sourabhbajaj.com/mac-setup/Scala/README.html
    
-   In case you are not familiar with Scala, Scala is built using Java, hence the compiled results
+   In case you are not familiar with Scala, Scala is built using Java. Hence the compiled results
    is a jar file, the same as Java code. Functional programming is really beautiful. You should try
-   Scala!!
+   it!!
    
 1. sbt (for building scala program)
    https://www.scala-sbt.org/index.html
@@ -61,7 +61,7 @@ Usage: MuscialNumbers-X.Y [options]
   -t, --tunetype <value>   Tune Type, i.e. jig, march, reel
   -k, --key <value>        Tune Key Signature, i.e. C, D, E, F, G, A, B
   -m, --notemapping <value>
-                           Note Mapping Strategy
+                           Note Mapping Strategy, i.e. direct, wrapped
   -r, --rhythmpattern <value>
                            Rhythm Pattern (Support TBD).
   --help                   prints this usage text
@@ -96,8 +96,13 @@ w: 6 2 8 6 2 0  8 9 9 8 6 2  8 0 3 4 8 2  5 3 4 2 1 1
 The program outputs the tune in ABC notation: https://en.wikipedia.org/wiki/ABC_notation
 
 There are many free software for converting ABC notation into sheet music, 
-and some can also generate the MIDI for listening, such as:
+and some can also generate the MIDI file for listening, such as:
+
 MuseScore: https://musescore.org/en/download (with *abc import* https://musescore.org/en/project/abc-import) 
+
+EasyABC: https://sourceforge.net/projects/easyabc/
+
+A full list of software for ABC notation can be found at: http://abcnotation.com/software
 
 ## Resources:
 The program takes a txt file containing the number sequence as input.

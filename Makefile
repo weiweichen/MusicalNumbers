@@ -3,8 +3,7 @@ compile:
 	sbt assembly 
 
 all: compile
-	 java -jar target/scala-2.11/Musical-Numbers-assembly-1.0-SNAPSHOT.jar resources/SquareRoots/2.txt resources/SquareRoots/2.abc
-
-run2:
-	 java -jar target/scala-2.11/Musical-Numbers-assembly-1.0-SNAPSHOT.jar resources/SquareRoots/2.txt resources/SquareRoots/2.abc
+	java -jar target/scala-2.11/MusicalNumbers-assembly-0.0.jar \
+	 -i resources/numbers/the_number_of_pi.txt \
+	 -t jig -k D -m wrapped -v
 
