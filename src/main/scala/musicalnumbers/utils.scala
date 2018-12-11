@@ -18,8 +18,8 @@ object utils {
       file.createNewFile()
     }
     val fos = new FileOutputStream(file, false)
-    val outStream = new DataOutputStream(new BufferedOutputStream(fos))
-    outStream.writeUTF(content)
+    val outStream = new PrintStream(fos)
+    outStream.print(content)
     outStream.close()
     println(content)
   }

@@ -24,7 +24,7 @@ object Options {
     opt[String]('i', "input").action((x, c) =>
       c.copy(inputFileName = x)).text("Input File Name")
 
-    opt[String]('t', "tune type").required().action((x, c) =>
+    opt[String]('t', "tunetype").required().action((x, c) =>
       c.copy(tuneType = x)).validate(x =>
         if (validTuneTypes.contains(x)) success
         else {
@@ -39,15 +39,17 @@ object Options {
         failure(s"Tune key signature needs to be one of these: [${validKeys.mkString(", ")}].")
     }).text("Tune Key Signature, i.e. C, D, E, F, G, A, B")
 
-    opt[String]('m', "Note Mapping").action((x, c) =>
+    opt[String]('m', "notemapping").action((x, c) =>
       c.copy(noteMapping = x)).validate(x =>
       if (noteMappings.contains(x)) success
       else {
         failure(s"Note Mapping needs to be one of these: [${noteMappings.mkString(", ")}].")
     }).text("Note Mapping Strategy")
 
-    opt[String]('r', "rhythm pattern").action((x, c) =>
+    opt[String]('r', "rhythmpattern").action((x, c) =>
       c.copy(rhythmPattern = x)).text("Rhythm Pattern (Support TBD).")
+
+    help("help").text("prints this usage text")
 
     opt[Unit]('v', "verbose").action( (_, c) =>
       c.copy(verbose = true) ).text("verbose is a flag")

@@ -1,27 +1,39 @@
 # MusicalNumbers
-This is a program to map number series, such as pi, square roots of numbers, ect.
-into traditional folk music tunes (i.e. march, jig, reel, etc).
 
-The program is written to full fill the quest of finding out
- which number is the most musical number? 
+This is a toy program to entertain the idea of mapping number sequences, such as pi, square roots of numbers, ect.
+into folk music tunes (i.e. march, jig, reel, etc), 
+or in a more philosophical way, as a quest to find which out the most musical number 
+in the universe.
 
-Email me (weiwei.chen.uci@gmail.com) if you have an answer! 
+Let me know (weiwei.chen.uci@gmail.com) if you have any opinions on the effort or the result of the quest! 
  
 
 ## Minimum Prerequisite to build and run
 1. jdk (for running java code)
    https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+   
    MacOS: https://www.chrisjmendez.com/2018/10/14/how-to-install-java-on-osx-using-homebrew/
   
 1. scala-lang (well, since the program is written in Scala)
    https://www.scala-lang.org/download/
+   
    MacOS: http://sourabhbajaj.com/mac-setup/Scala/README.html
+   
+   In case you are not familiar with Scala, Scala is built using Java, hence the compiled results
+   is a jar file, the same as Java code. Functional programming is really beautiful. You should try
+   Scala!!
+   
 1. sbt (for building scala program)
    https://www.scala-sbt.org/index.html
+   
    MacOS: https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Mac.htm0l
    
-Install everything on MacOs:
+Install everything on MacOS (ignore the Spark part):
    https://medium.freecodecamp.org/installing-scala-and-apache-spark-on-mac-os-837ae57d283f
+   
+Scala runs on Java Virtual Machine (JVM), therefore the build/execution environment for this program is 
+platform agnostic. If you use operating systems other than MacOS, install the prerequisites for
+your platform.
    
 ## How to build
 ```
@@ -34,26 +46,34 @@ The compiled jar will be ```target/scala-2.11/MusicalNumbers-assembly-0.0.jar```
 
 ```
 $ cd MusicalNumbers/
-$ java -jar target/scala-2.11/MusicalNumbers-assembly-0.0.jar -i resources/numbers/the_number_of_pi.txt -t jig -k D -m wrapped
+$ java -jar target/scala-2.11/MusicalNumbers-assembly-0.0.jar \
+       -i resources/numbers/the_number_of_pi.txt \
+       -t jig -k D -m wrapped -v
 ```
 
 Program usage:
 ```
+$ java -jar target/scala-2.11/MusicalNumbers-assembly-0.0.jar --help 
 Musical Numbers 0.0
 Usage: MuscialNumbers-X.Y [options]
 
   -i, --input <value>      Input File Name
-  -t, --tune type <value>  Tune Type
-  -k, --key <value>        Tune Key Signature
-  -m, --Note Mapping <value>
+  -t, --tunetype <value>   Tune Type, i.e. jig, march, reel
+  -k, --key <value>        Tune Key Signature, i.e. C, D, E, F, G, A, B
+  -m, --notemapping <value>
                            Note Mapping Strategy
-  -r, --rhythm pattern <value>
+  -r, --rhythmpattern <value>
                            Rhythm Pattern (Support TBD).
+  --help                   prints this usage text
   -v, --verbose            verbose is a flag
 ```
 
 Program output:
 ```
+$ java -jar target/scala-2.11/MusicalNumbers-assembly-0.0.jar \
+       -i resources/numbers/the_number_of_pi.txt \
+       -t jig -k D -m wrapped -v
+       
 Output File: resources/numbers/the_number_of_pi.abc
 
 X:1
@@ -80,9 +100,9 @@ and some can also generate the MIDI for listening, such as:
 MuseScore: https://musescore.org/en/download (with *abc import* https://musescore.org/en/project/abc-import) 
 
 ## Resources:
-The program takes a txt file containing the number series as input.
+The program takes a txt file containing the number sequence as input.
 
-Some of the sample numbers are located in ```resources/numbers/*.txt```. 
+Some of the sample numbers are located at ```resources/numbers/*.txt```. 
 The source of the numbers are from https://apod.nasa.gov/htmltest/rjn_dig.html 
 
 # TODO
@@ -96,12 +116,12 @@ Hence, the program shall take some rhythm patterns to add some cadence to the tu
 1. Auto generator for number sequences, such as generating first k digits of square root N, 
 square root of an imaginary number?
 
+1. Use different repetition patterns for digits.
+
 1. ...
 
 # About
-This project is authored by Weiwei Chen
-
-Email: weiwei.chen.uci@gmail.com   
+Author: Weiwei Chen (weiwei.chen.uci@gmail.com) 
 
 Link: http://www.cecs.uci.edu/~weiweic/
 

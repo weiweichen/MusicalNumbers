@@ -81,8 +81,7 @@ object MusicalNumbers{
     val noteLength = tuneInfo(tuneType)._2
      val tuneTypeName = tuneInfo(tuneType)._4
 
-     s"""
-        |X:1
+     s"""|X:1
         |T:${tuneName} ${tuneTypeName}
         |M:${timeSignature}
         |L:${noteLength}
