@@ -114,7 +114,7 @@ The source of the numbers are from https://apod.nasa.gov/htmltest/rjn_dig.html
 1. It's quite obvious that rhythm is an integral part of a ear-pleasing tune. 
 Hence, the program shall take some rhythm patterns to add some cadence to the tunes.
 
-1. Support for more tune types such as polka, waltz, ect.
+1. Support for more tune types such as polka, waltz, strathspey, ect.
 
 1. Support for chromatic scales instead of diatonic scales only.
 
